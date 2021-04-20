@@ -1,4 +1,4 @@
-#Single-sign-
+#Single-sign-on
 # iteration 1
 == README
 
