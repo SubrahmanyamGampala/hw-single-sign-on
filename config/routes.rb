@@ -1,4 +1,21 @@
 Rails.application.routes.draw do
+    match '/auth/:provider/callback', :to => 'sessions#create', :via => [:get, :post]
+  match 'auth/failure', :to => 'sessions#failure', :via => [:get, :post]
+  get 'sessions/destroy', :as => 'logout'
+  get 'sessions/clear'
+  get 'session/debug'
+  #get 'sessions/clear'
+
+  #get 'sessions/debug'
+
+  get 'sessions/new'
+
+  get 'sessions/create'
+
+  get 'sessions/failure'
+
+  get 'sessions/destroy'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   get 'welcome/landing', :as => :welcome_landing
