@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   has_many :authorizations, :dependent => :destroy
   validates :name, :email, :presence => true
   validate :staff_or_student
+  has_one :profile, :dependent => :destroy
   
   def staff_or_student
     errors.add(:email, "must be for Binghamton University") if
@@ -10,6 +11,10 @@ class User < ActiveRecord::Base
   
   def self.create_with_omniauth info
     create!(name: info['name'], email: info['email'])
+  end
+  
+  def create_profile
+    Profile.create(user_id: self.id)
   end
   
 end

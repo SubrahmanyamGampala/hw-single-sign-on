@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   
 
+  resources :profiles
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   get 'welcome/landing', :as => :welcome_landing
@@ -15,7 +16,9 @@ Rails.application.routes.draw do
   get 'sessions/clear'
   get 'session/debug'
  
-
+resources :users, only: [:destroy] do
+    resources :profiles, only: [:show, :edit, :update, :destroy]
+  end
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

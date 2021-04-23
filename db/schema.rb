@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210421191550) do
+ActiveRecord::Schema.define(version: 20210423232723) do
 
   create_table "authorizations", force: :cascade do |t|
     t.string   "provider"
@@ -23,6 +23,19 @@ ActiveRecord::Schema.define(version: 20210421191550) do
 
   add_index "authorizations", ["user_id"], name: "index_authorizations_on_user_id"
 
+  create_table "profiles", force: :cascade do |t|
+    t.string   "primary_language"
+    t.string   "secondary_language"
+    t.string   "favorite_movie"
+    t.string   "worst_movie"
+    t.string   "favorite_genre"
+    t.integer  "user_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "profiles", ["user_id"], name: "index_profiles_on_user_id"
+
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
@@ -31,16 +44,3 @@ ActiveRecord::Schema.define(version: 20210421191550) do
   end
 
 end
-
-class User < ActiveRecord::Base
-  has_many :authorizations, :dependent => :destroy
-  validates :name, :email, :presence => true
-  
-end
-
-class Authorization < ActiveRecord::Base
-  belongs_to :user  # should be there already
-  validates :provider, :uid, :presence => true
-  
-end
-

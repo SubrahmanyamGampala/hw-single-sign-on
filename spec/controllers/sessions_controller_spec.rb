@@ -30,11 +30,17 @@ RSpec.describe SessionsController, type: :controller do
         describe "after successful registration" do 
           let(:id1)  {1}
           let(:user) {double('User', name: 'SUNY Tester', email: 'stester@binghamton.edu', id: id1)}
-          let(:auth) {double('Authorization', provider: "github", uid: "123456", user_id: id1, user: double('User', name: 'SUNY Tester', email: 'stester@binghamton.edu', id: id1))} 
+          let(:auth) {double('Authorization', provider: "github", uid: "123456", user_id: id1, user: double('User', name: 'SUNY Tester', email: 'stester@binghamton.edu', id: id1))}
+          let(:id2)  {2}
+          let(:user_id) {1}   
           it "sets a flash message" do
             post :create, provider: :github
             expect(flash[:notice]).to match(/^Welcome #{user.name}! You have signed up via #{auth.provider}.$/)          
-          end           
+          end 
+          it 'redirects to the edit profile page' do
+            post :create, provider: :github  
+            expect(response).to redirect_to(edit_user_profile_path(user_id: 1, id: id2))            
+          end
         end
       end
     end
