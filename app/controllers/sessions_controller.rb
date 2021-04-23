@@ -1,7 +1,9 @@
 class SessionsController < ApplicationController
   def create
     #auth_hash = request.env['omniauth.auth']
-    user = User.create!("name" => auth_hash[:info][:name], "email" => auth_hash[:info][:email])
+    #user = User.create!("name" => auth_hash[:info][:name], "email" => auth_hash[:info][:email])
+    user = User.create_with_omniauth(auth_hash['info'])
+    auth = Authorization.create_with_omniauth(auth_hash, user)
   end
   
     def debug
