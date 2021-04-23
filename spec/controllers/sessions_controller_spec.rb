@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe SessionsController, type: :controller do
-  describe "#create"
+  describe "#create" do
     context "no active session, User and Authorization do not exist" do
-  before do
-          session[:user_id] = nil
+      before do
+        session[:user_id] = nil
           # Database has been cleaned, so shouldn't have to worry about User and Authorization
-        end 
+      end 
       context 'register with github' do
         describe 'When signing up for first time' do 
           let(:auth) {double('Authorization', provider: "github", uid: "123456", user_id: id1, user: double('User', name: 'SUNY Tester', email: 'stester@binghamton.edu', id: id1))} 
@@ -17,19 +17,29 @@ RSpec.describe SessionsController, type: :controller do
             expect { post :create, provider: :github }.to change(Authorization, :count).by(1)
             #post :create, provider: :github
           end
-          it "creates a current_user", :pending => true do
+
+          it "creates a session" do
+            post :create, provider: :github
+            expect(session[:user_id]).to eq(1)
+          end
+          it "creates a current_user" do
+            expect(controller).to receive(:current_user=).exactly(1).times
             post :create, provider: :github
           end
-          it "creates a session", :pending => true do
+        end
+        describe "after successful registration" do 
+          let(:id1)  {1}
+          let(:user) {double('User', name: 'SUNY Tester', email: 'stester@binghamton.edu', id: id1)}
+          let(:auth) {double('Authorization', provider: "github", uid: "123456", user_id: id1, user: double('User', name: 'SUNY Tester', email: 'stester@binghamton.edu', id: id1))} 
+          it "sets a flash message" do
             post :create, provider: :github
-          end
-          it "sets a flash message", :pending => true do
-            post :create, provider: :github
-          end              
+            expect(flash[:notice]).to match(/^Welcome #{user.name}! You have signed up via #{auth.provider}.$/)          
+          end           
         end
       end
     end
   end
-  
+end
+
   
 

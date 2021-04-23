@@ -21,7 +21,7 @@ omniauth_hash = { 'provider' => 'github',
                   'uid' => "123456",
                   'info' => {
                       'name' => "SUNY Tester",
-                      'email' =>"stester@binghamton.edu",
+                      'email' =>"stester@binghamton.edu"
                   }
 }
  

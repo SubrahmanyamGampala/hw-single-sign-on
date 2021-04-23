@@ -4,9 +4,13 @@ class SessionsController < ApplicationController
     #user = User.create!("name" => auth_hash[:info][:name], "email" => auth_hash[:info][:email])
     user = User.create_with_omniauth(auth_hash['info'])
     auth = Authorization.create_with_omniauth(auth_hash, user)
+    session[:user_id] = auth.user.id
+    self.current_user= auth.user
+    message = "Welcome #{user.name}! You have signed up via #{auth.provider}."
+    flash[:notice] = message
   end
   
-    def debug
+  def debug
     puts '\n raw auth_hash\n'
     p auth_hash
     puts '\n\nauth_hash by key\n'
@@ -19,9 +23,8 @@ class SessionsController < ApplicationController
       end
     end
   end
-end
 
-private
+  private
   
   def nested_hash nh, indent
     puts indent + "VALUE is a nested hash"
@@ -40,3 +43,4 @@ private
     #ensures that it's only retrieved once per cycle
     @auth_hash ||= request.env['omniauth.auth']
   end
+end
