@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
   get 'welcome/landing', :as => :welcome_landing
   root 'welcome#landing'
-  post '/auth/:provider/callback', to: 'sessions#create'
+  post '/auth/:provider/callback', to: 'sessions#create', :to => 'sessions#create', :via => [:get, :post]
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 

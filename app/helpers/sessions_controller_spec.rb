@@ -5,7 +5,7 @@ RSpec.describe SessionsController, type: :controller do
     context "no active session, User and Authorization do not exist", :pending => true do 
       context 'register with github', :pending => true do
         describe 'When signing up for first time', :pending => true do
-          it "creates a User"
+          it "creates a User", :pending => true do
           end        
           it "creates an Authorization", :pending => true do
           end
@@ -20,6 +20,3 @@ RSpec.describe SessionsController, type: :controller do
     end
   end
 end
-  
-  
-
