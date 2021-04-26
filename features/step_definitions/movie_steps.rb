@@ -9,5 +9,6 @@ Then(/^I should see the welcome message$/) do
 end
 
 Then /^I will see "([^"]*)"$/ do |message|
+  puts page.body # <---
   expect(page.body).to have_content(message)
 end

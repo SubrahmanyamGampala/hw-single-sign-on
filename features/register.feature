@@ -17,12 +17,12 @@ Background: profiles in databasea
 Scenario: Register
   Given I am on the RottenPotatoes Landing Page
   And I press "Register with GitHub"
-  And I will see "Welcome Tester Suny! You have signed up via GitHub."
-  Then I am on the RottenPotatoes edit Profile page for 'Tester SUNY'
-   
+  And I should see "Welcome Tester SUNY! You have signed up via github."
+  And I should see "Editing profile" 
+  
 
 @omniauth_test2
 Scenario:  Can't Register without SUNY ID
   Given I am on the RottenPotatoes Landing Page
   And I press "Register with GitHub"
-  Then I should see message "Only Students and Staff belonging to SUNY Binghamton can register for this app"
+  And I should see "ActiveRecord::RecordInvalid: Validation failed: Email must be for Binghamton University"
